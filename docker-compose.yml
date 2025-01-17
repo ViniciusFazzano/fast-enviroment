@@ -1,0 +1,41 @@
+services:
+  postgres:
+    container_name: postgres_docker
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    environment:
+      LOCAL_USER: ${LOCAL_USER}
+      LOCAL_PASSWORD: ${LOCAL_PASSWORD}
+      LOCAL_DB: ${LOCAL_DB}
+      POSTGRES_PASSWORD: ${LOCAL_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+      REMOTE_HOST: ${REMOTE_HOST}
+      REMOTE_PORT: ${REMOTE_PORT}
+      REMOTE_USER: ${REMOTE_USER}
+      REMOTE_PASSWORD: ${REMOTE_PASSWORD}
+      REMOTE_DB: ${REMOTE_DB}
+    networks:
+      - postgres_network
+    ports:
+      - "${LOCAL_PORT}:5432"
+
+  pgadmin:
+    container_name: pgadmin_docker
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+volumes:
+  pg_data:
+
+networks:
+  postgres_network:
+    driver: bridge
