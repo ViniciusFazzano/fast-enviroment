@@ -28,6 +28,7 @@ RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rew
 # RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 RUN ln -s /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/headers.load
 
+COPY setup-back/back/ /var/www/projeto
 
 # Defina o diretório de trabalho dentro do contêiner
 WORKDIR /var/www/projeto

@@ -33,18 +33,29 @@ services:
     links:
       - postgres
 
-  web:
+  back:
     build:
       context: .
       dockerfile: setup-back/Dockerfile.back
     container_name: php_docker
     restart: always
     volumes:
-      - .:/var/www/projeto
+      - ./setup-back/back:/var/www/projeto
     ports:
       - "80:80"
     depends_on:
       - postgres
+
+  front:
+    build:
+      context: .
+      dockerfile: setup-front/Dockerfile.front
+    container_name: front_docker
+    restart: always
+    volumes:
+      - ./setup-front/front:/var/www/html
+    ports:
+      - "8080:80"
 
 volumes:
   pg_data:

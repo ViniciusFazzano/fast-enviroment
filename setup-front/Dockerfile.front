@@ -1,0 +1,11 @@
+# Use a imagem oficial do Apache
+FROM httpd:latest
+
+# Copie os arquivos da pasta 'public' para o diretório padrão do Apache
+COPY /setup-front/front /usr/local/apache2/htdocs/
+
+# Exponha a porta padrão do Apache
+EXPOSE 8080
+
+# Comando para inicializar o Apache (já é o padrão)
+CMD ["httpd-foreground"]
