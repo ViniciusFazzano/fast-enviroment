@@ -3,7 +3,7 @@ services:
     container_name: postgres_docker
     build:
       context: .
-      dockerfile: Dockerfile.postgres
+      dockerfile: setup-postgres/Dockerfile.postgres
     environment:
       LOCAL_USER: ${LOCAL_USER}
       LOCAL_PASSWORD: ${LOCAL_PASSWORD}
@@ -27,10 +27,23 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
-      - "80:80"
+      - "8888:80"
     depends_on:
       - postgres
     links:
+      - postgres
+
+  web:
+    build:
+      context: .
+      dockerfile: setup-back/Dockerfile.back
+    container_name: php_docker
+    restart: always
+    volumes:
+      - .:/var/www/projeto
+    ports:
+      - "80:80"
+    depends_on:
       - postgres
 
 volumes:

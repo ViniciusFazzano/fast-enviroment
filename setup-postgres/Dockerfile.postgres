@@ -1,7 +1,7 @@
 FROM postgres:17
 
 # Copiar um script de configuração para o contêiner
-COPY setup.sh /docker-entrypoint-initdb.d/
+COPY setup-postgres/setup.sh /docker-entrypoint-initdb.d/
 
 # Dar permissão de execução ao script
 RUN chmod +x /docker-entrypoint-initdb.d/setup.sh
